@@ -35,7 +35,6 @@ public class ProductController {
     @PostMapping
     public String saveProduct(@ModelAttribute("product") Product product) {
         Product p =proService.save(product);
-        System.out.println(p.getDesignation());
         return "redirect:/Products";
     }
 
