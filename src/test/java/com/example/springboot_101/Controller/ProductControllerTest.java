@@ -45,6 +45,9 @@ public class ProductControllerTest {
 
     @Test
     public void testSaveProduct() throws Exception {
+        Product mockProduct = new Product(1L, "Product1", 100);
+        when(productService.save(any(Product.class))).thenReturn(mockProduct); // Mock the behavior
+
         mockMvc.perform(post("/Products")
                         .param("id", "1")
                         .param("designation", "Product1")
