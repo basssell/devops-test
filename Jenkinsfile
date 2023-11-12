@@ -16,13 +16,21 @@ pipeline {
 
         stage('Test') {
             steps {
-                echo "This is the test stage"
+                sh 'mvn clean test'
+            }
+            post {
+                always {
+                    junit '**/target/surefire-reports/*.xml'
+                }
+                failure {
+                    echo 'error si wassim'
+                }
             }
         }
 
         stage('Build') {
             steps {
-                sh 'mvn clean install'
+                sh 'mvn clean package'
             }
         }
     }
