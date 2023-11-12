@@ -14,6 +14,12 @@ pipeline {
             }
         }
 
+        stage('Check java version') {
+            steps{
+                sh 'java -version'
+            }
+        }
+
         stage('Test') {
             steps {
                 echo "This is the test stage"
