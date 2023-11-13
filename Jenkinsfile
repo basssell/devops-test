@@ -33,6 +33,30 @@ pipeline {
                 sh 'mvn clean package'
             }
         }
+
+        stage('Build docker image') {
+            steps {
+                script {
+                    dockerImage = docker.build("myapp:${env.BUILD_ID}")
+                }
+            }
+        }
+
+        stage('Push Image') {
+            steps {
+                script {
+                    docker.withRegistry('https://registry.hub.docker.com', dockerhub.credentials) {
+                        dockerImage.push()
+                    }
+                }
+            }
+        }
+
+        stage('last one ') {
+            steps {
+                sh "docker run -d --name myapp -p 8080:8081 myapp:${env.BUILD_ID}"
+            }
+        }
     }
 
     post {
